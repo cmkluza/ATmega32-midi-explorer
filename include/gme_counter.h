@@ -4,6 +4,12 @@
 #include <stdint.h>
 
 /**
+ * Converts a number of clock cycles to a number of ms.
+ * Assumes prescalar is set to F_CPU/256
+ */
+#define CYCLES_TO_MS(c) ((256UL * (c)) / 4000UL)
+
+/**
  * Initializes the timers and associated interrupts.
  */
 void init_counter_interrupts(void);
@@ -26,6 +32,6 @@ void reset_timer(void);
 /**
  * Reads the current timer value in milliseconds.
  */
-uint16_t read_timer(void);
+uint16_t read_timer_ms(void);
 
 #endif /* GME_COUNTER_H_ */

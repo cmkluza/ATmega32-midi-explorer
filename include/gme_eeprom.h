@@ -14,10 +14,9 @@ void init_eeprom(void);
 /**
  * Writes a MIDI message to EEPROM.
  * Write format:
- * (lower address) time_elapsed_low, time_elapsed_high,
- * byte1, byte2, byte3 (higher address)
+ * (lower address) byte1, byte2, byte3 (higher address)
  *
- * Each MIDI message takes up 5 bytes.
+ * Each MIDI message takes up 3 bytes.
  */
 void eeprom_write_msg(MidiMsg *msg);
 
@@ -27,6 +26,23 @@ void eeprom_write_msg(MidiMsg *msg);
  * Wraps upon meeting end of useful data.
  */
 void eeprom_read_msg(MidiMsg *msg);
+
+/**
+ * Writes a MIDI message to EEPROM.
+ * Write format:
+ * (lower address) midi_msg_start, midi_msg_stop,
+ * duration, time_elapsed (higher address)
+ *
+ * Each MIDI note takes up 10 bytes.
+ */
+void eeprom_write_note(MidiNote *note);
+
+/**
+ * Reads a MIDI note from EEPROM.
+ * Reading is sequential, continues from the previous address.
+ * Wraps upon meeting end of useful data.
+ */
+void eeprom_read_note(MidiNote *note);
 
 /**
  * Resets the current read address.
@@ -43,11 +59,11 @@ void reset_write_addr(void);
 /**
  * True if this is the first message being written.
  */
-int is_first_msg(void);
+int is_first_write(void);
 
 /**
  * True if this is the last message being read.
  */
-int is_last_msg(void);
+int is_last_read(void);
 
 #endif /* GME_EEPROM_H_ */

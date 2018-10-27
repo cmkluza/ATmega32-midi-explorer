@@ -12,9 +12,8 @@
 #define PLAYBACK_PIN PINA1
 #define MODIFY_PIN PINA0
 
-#define LED_PIN PINB
+#define LED_PORT PORTB
 #define LED_DDR DDRB
-
 
 /**
  * Initializes necessary values for digital I/O.
@@ -29,11 +28,11 @@ void set_leds(uint8_t byte);
 
 /**
  * Flashes the given pattern on the LEDs for a given amount of
- * milliseconds, at a rate of 10 Hz (100 ms delays).
+ * milliseconds.
  *
  * This operation is not async, and blocks the program.
  */
-void block_flash_leds(uint8_t byte, uint8_t ms_delay, uint16_t milliseconds);
+void block_flash_leds(uint8_t byte, uint16_t milliseconds);
 
 /**
  * True if the recording switch is set.

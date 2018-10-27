@@ -5,7 +5,8 @@
 enum error {
     USART_READ_ERR = 1,
     FRAME_ERR,
-    EEPROM_INVALID_ADDR
+    EEPROM_INVALID_ADDR,
+    EEPROM_MEM_EXCEEDED
 };
 
 /**

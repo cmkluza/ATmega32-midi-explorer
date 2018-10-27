@@ -1,5 +1,5 @@
-#include <gme_midimsg.h>
-#include <gme_error.h>
+#include "include/gme_midimsg.h"
+#include "include/gme_error.h"
 
 #include <stdlib.h>
 
@@ -20,4 +20,9 @@ void midi_err_check(MidiMsg *msg) {
         log_error(USART_READ_ERR);
         exit(USART_READ_ERR);
     }
+}
+
+void midi_note_err_check(MidiNote *note) {
+    midi_err_check(note->start);
+    midi_err_check(note->stop);
 }

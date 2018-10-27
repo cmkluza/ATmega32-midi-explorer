@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 /**
- * This represents a single MIDI message .
+ * This represents a single MIDI message.
  * MIDI message format:
  * * idle at 1
  * * START bit when switch from idle to 0
@@ -12,12 +12,6 @@
  * * STOP bit, the ninth bit equal to 1
  */
 typedef struct {
-    /**
-     * Time elapsed between this note and the previous note in ms.
-     * Equal to zero for the first note.
-     */
-    uint16_t time_elapsed;
-
     /** Byte 1 - Status Byte
      * MSB is ON: 0b1xxxxxxx
      * Contains code for Note On, Note Off, other ctrl, ChlD
@@ -36,6 +30,28 @@ typedef struct {
 } MidiMsg;
 
 /**
+ * This represents a single MIDI note.
+ */
+typedef struct {
+    /**
+     * The Start and Stop messages.
+     */
+     MidiMsg *start;
+     MidiMsg *stop;
+
+     /**
+      * The duration of the note in ms.
+      */
+      uint16_t duration;
+
+    /**
+     * Time elapsed between this note and the previous note in ms.
+     * Equal to zero for the first note.
+     */
+    uint16_t time_elapsed;
+} MidiNote;
+
+/**
  * Determines if the given byte is the start byte of a MIDI
  * message.
  */
@@ -52,5 +68,11 @@ int is_data_byte(uint8_t data);
  * format.
  */
 void midi_err_check(MidiMsg *msg);
+
+/**
+ * Determines if the given MIDI note is of an appropriate
+ * format.
+ */
+void midi_note_err_check(MidiNote *note);
 
 #endif /* GME_MIDIMSG_H_ */
